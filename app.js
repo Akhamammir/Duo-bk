@@ -4,8 +4,22 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var db = require('./config/database');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var obrasRouter = require('./routes/obras');
+var equiposRouter = require('./routes/equipos');
+// var OperadoresRouter = require('./routes/operadores');
+
+//Test database
+(async () => {
+  try {
+    await db.authenticate();
+    console.log('Connection has been established successfully.');
+  } catch (error) {
+    console.log('Unable to connect to the database, error');
+  }
+})();
 
 var app = express();
 
@@ -21,14 +35,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/obras', obrasRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
