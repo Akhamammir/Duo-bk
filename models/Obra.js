@@ -166,6 +166,7 @@ const Obra = db.define('obra', {
   },
   IdObra: {
     type: DataTypes.STRING,
+    primaryKey: true
   },
   PorcentajeAnticipoAutorizado: {
     type: DataTypes.STRING,
@@ -311,6 +312,6 @@ const Obra = db.define('obra', {
   IdRegistroPatronal: {
     type: DataTypes.STRING,
   },
-});
+}, {timestamps: false});
 
 module.exports = Obra;

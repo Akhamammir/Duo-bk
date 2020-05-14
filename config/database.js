@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 
-module.exports = new Sequelize('DESUR', 'VScontrol', 'vsm1234@', {
-  host: 'localhost', //'localhost|| 192.168.10.1\VSCONTROLTOTAL',
-  port: '1433',
+module.exports = new Sequelize('DESUR', 'VSControl', 'vsm1234@', {
+  host: "192.168.10.1", //'localhost|| 192.168.10.1\VSCONTROLTOTAL',
+  port:'49686',
   dialect: 'mssql',
   operatorsAliases: false,
   pool: {

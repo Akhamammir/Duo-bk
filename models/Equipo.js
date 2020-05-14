@@ -181,6 +181,7 @@ const Equipo = db.define('equipo', {
   },
   IdEquipo: {
     type: DataTypes.STRING,
+    primaryKey: true
   },
   IdEstatusDeRenta: {
     type: DataTypes.STRING,
@@ -395,6 +396,6 @@ const Equipo = db.define('equipo', {
   EsDepreciacionFiscal: {
     type: DataTypes.STRING,
   },
-});
+}, {timestamps: false});
 
 module.exports = Equipo;
