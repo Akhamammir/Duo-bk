@@ -1,25 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const fetch = require('node-fetch');
 
 const { Op } = require("sequelize");
 const db = require('../config/database');
-const Obra = require('../models/Obra');
 
-/* GET Obras listing. */
+/* GET Operadores listing. */
 //test with : ADICIONALES EL ROBLE 2 
 router.get('/', (req, res, next) => {
   const name = req.query.name
-  db.query("SELECT TOP 8 Direccion, Descripcion, IdObra FROM dbo.Obras WHERE Descripcion LIKE '%"+name+"%'")
-    /*Obra.findAll({
-      where:{
-        NombreCorto : name
-      },
-      limit:7
-    })*/
+  db.query("SELECT TOP 8 IdEmpleado, Nombre FROM dbo.Empleados WHERE Nombre LIKE '%"+name+"%' AND EsConductor=1")
     .then((data) => {
       //console.log('Soolushun:',data);
-      res.send(data);
+      res.send({
+        data
+      });
     })
     .catch((e) => console.log('Ha ocurrido un error: ', e))
 });
