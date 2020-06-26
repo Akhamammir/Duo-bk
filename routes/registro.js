@@ -50,7 +50,7 @@ router.post('/', (req, res, next) => {
   } = req.body.data;
   
   const Insumos = {
-    Gasolina: {id:'COMB-004',cantidad:CantidadGas},
+    GASOLINA: {id:'COMB-004',cantidad:CantidadGas},
     Diesel:{id:'COMB-006',cantidad:CantidadDiesel}
   }
   
@@ -58,7 +58,7 @@ router.post('/', (req, res, next) => {
   ContadorFinal = +ContadorFinal;
   console.log(HrsEspera);
   console.log('begin declarate values');
-
+try {
   //Campos Tabla usosEquipos
   var IdUsoEquipo;
   const Turno = "''";
@@ -105,7 +105,7 @@ router.post('/', (req, res, next) => {
   const IdObraOrigen = '  '; //char
   const IdSucursal = 1; //number
   // const Notas = '  ';//text
-  const TipoMovAlmacen = 'EOC'; //char
+  const TipoMovAlmacen = 'S'; //char
   const IdAlmacenOrigen = 0; //number
   const IdEmpleadoEntrego = 0; //number
   const IdFacturaDeProveedor = '  '; //char
@@ -153,10 +153,11 @@ router.post('/', (req, res, next) => {
   //
   //Valores Tabla MovsAlmacenD
   //
+  console.log(TipoCombustible.trim(), 'Ln 156 rsult')
   var ID;
   //var IdMovAlmacen = '   ';//char
-  const IdInsumo = Insumos[TipoCombustible].id; //char COMB-004|COMB-006 --TipoCombustible
-  const Cantidad = Insumos[TipoCombustible].cantidad; //float CantidadGas | CantidadDiesel
+  const IdInsumo = Insumos[''+TipoCombustible.trim().toUpperCase()].id; //char COMB-004|COMB-006 --TipoCombustible
+  const Cantidad = Insumos[''+TipoCombustible.trim().toUpperCase()].cantidad; //float CantidadGas | CantidadDiesel
   // const IdObraOrigen = '   '; //char
   // const IdSucursal = '   ';//number
   // const IdUnidad = '   ';//number
@@ -194,7 +195,7 @@ router.post('/', (req, res, next) => {
   const PeriodoDeCargoDestino = '1900-01-01 00:00:00.000'; //datetime
 
   console.log('begin declarate querys');
-  try {
+  
     //obtener ultimo ID registrado en UsosEquipo
     console.log('begin execute querys');
     db.query(
@@ -235,7 +236,7 @@ router.post('/', (req, res, next) => {
                       .then((data) => {
                         ID = data[0][0].ID + 1;
 
-                        const queryAlmacenD = `INSERT INTO MovsAlmacenD (IdMovAlmacen, IdInsumo, Cantidad, IdObraOrigen, IdSucursal, IdUnidad, Notas, CantidadUtilizada, Precio, IdObraDestino, Importe, IdAreaCosteo, TipoCosto, PrecioSegunOC, Created, IdUsuarioCreo, ContadorEquipo, ContadorMotor, FolioInternoSuministro, IdEmpleadoOperador, IdEquipo, IdObraUbicacion, IdOrdenTrabajo, IdAreaCosteoDestino, Costo, CostoD, CostoP, PrecioDeVenta, ImporteD, IdEspecieSegunMarea, CantidadDeEmpaques, KgsProduccionBruta, PesoDeEmpaques, IdDescargaDeBarcos, IdAlmacen, PeriodoDeCargo, TipoCostoDestino, PeriodoDeCargoDestino) VALUES ('${IdMovAlmacen}', '${IdInsumo}', ${Cantidad}, '${IdObraOrigen}', ${IdSucursal}, ${IdUnidad}, '${Notas}', ${CantidadUtilizada}, ${Precio}, '${IdObraDestino}', ${Importe}, ${IdAreaCosteo}, ${TipoCosto}, ${PrecioSegunOC}, '${Created}', ${IdUsuarioCreo}, ${ContadorEquipo}, ${ContadorMotor}, '${FolioInternoSuministro}', ${IdEmpleadoOperador}, '${IdEquipo}', '${IdObraUbicacion}', '${IdOrdenTrabajo}', ${IdAreaCosteoDestino}, ${Costo}, ${CostoD}, ${CostoP}, ${PrecioDeVenta}, ${ImporteD}, ${IdEspecieSegunMarea}, ${CantidadDeEmpaques}, ${KgsProduccionBruta}, ${PesoDeEmpaques}, ${IdDescargaDeBarcos}, ${IdAlmacen}, '${PeriodoDeCargo}', '${TipoCostoDestino}', '${PeriodoDeCargoDestino}')`;
+                        const queryAlmacenD = `INSERT INTO MovsAlmacenD (IdMovAlmacen, IdInsumo, Cantidad, IdObraOrigen, IdSucursal, IdUnidad, Notas, CantidadUtilizada, Precio, IdObraDestino, Importe, IdAreaCosteo, TipoCosto, PrecioSegunOC, Created, IdUsuarioCreo, ContadorEquipo, ContadorMotor, FolioInternoSuministro, IdEmpleadoOperador, IdEquipo, IdObraUbicacion, IdOrdenTrabajo, IdAreaCosteoDestino, Costo, CostoD, CostoP, PrecioDeVenta, ImporteD, IdEspecieSegunMarea, CantidadDeEmpaques, KgsProduccionBruta, PesoDeEmpaques, IdDescargaDeBarcos, IdAlmacen, PeriodoDeCargo, TipoCostoDestino, PeriodoDeCargoDestino) VALUES ('${IdMovAlmacen}', '${IdInsumo}', ${Cantidad}, '${IdObraOrigen}', ${IdSucursal}, ${IdUnidad}, ${Notas}, ${CantidadUtilizada}, ${Precio}, '${IdObraDestino}', ${Importe}, ${IdAreaCosteo}, ${TipoCosto}, ${PrecioSegunOC}, '${Created}', ${IdUsuarioCreo}, ${ContadorEquipo}, ${ContadorMotor}, '${FolioInternoSuministro}', ${IdEmpleadoOperador}, '${IdEquipo}', '${IdObraUbicacion}', '${IdOrdenTrabajo}', ${IdAreaCosteoDestino}, ${Costo}, ${CostoD}, ${CostoP}, ${PrecioDeVenta}, ${ImporteD}, ${IdEspecieSegunMarea}, ${CantidadDeEmpaques}, ${KgsProduccionBruta}, ${PesoDeEmpaques}, ${IdDescargaDeBarcos}, ${IdAlmacen}, '${PeriodoDeCargo}', '${TipoCostoDestino}', '${PeriodoDeCargoDestino}')`;
 
                         //Registro en tabla MovsAlmacenD
                         db.query(queryAlmacenD)

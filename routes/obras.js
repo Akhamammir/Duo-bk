@@ -10,7 +10,7 @@ const Obra = require('../models/Obra');
 //test with : ADICIONALES EL ROBLE 2 
 router.get('/', (req, res, next) => {
   const name = req.query.name
-  db.query("SELECT TOP 8 Direccion, Descripcion, IdObra FROM dbo.Obras WHERE Descripcion LIKE '%"+name+"%'")
+  db.query("SELECT TOP 8 Direccion, NombreCorto, Descripcion, IdObra FROM dbo.Obras WHERE IdObra LIKE '%"+name+"%'")
     /*Obra.findAll({
       where:{
         NombreCorto : name
