@@ -10,7 +10,7 @@ const Sequelize = require('sequelize');
 router.get('/main', (req, res, next) =>{
 const name = req.query.name
 console.log(req.query)
-  db.query("SELECT TOP 5 Nombre, Descripcion, Modelo, Anio, Placas, TipoCombustible, IdEquipo, ContadorActualEquipo, IdEmpleadoOperador, IdObra FROM dbo.Equipos WHERE IdEquipo LIKE '%"+name+"%'")
+  db.query("SELECT TOP 20 Nombre, Descripcion, Modelo, Anio, Placas, TipoCombustible, IdEquipo, ContadorActualEquipo, IdEmpleadoOperador, IdObra FROM dbo.Equipos WHERE IdEquipo LIKE '%"+name+"%' AND NOT IdEstatus = 13")
   /*Equipo.findAll({
   	where:{
   	  'Nombre' : {[Sequelize.Op.iLike]:'%'+name+'%'}

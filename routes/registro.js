@@ -28,7 +28,7 @@ router.post('/', (req, res, next) => {
       completar(this.getSeconds())
     );
   };
-  const Fecha = new Date().toDateTimeFormat();
+ //const Fecha = new Date().toDateTimeFormat();
 
   var {
     IdEquipo,
@@ -47,11 +47,20 @@ router.post('/', (req, res, next) => {
     CantidadOil,
     CantidadOilM,
     CantidadOilT,
+    Notas,
+    Fecha,
+    FolioInternoSuministro,
+    ContadorEquipo// valor 2do Horometro
   } = req.body.data;
+
+  let FechaAnterior = new Date(Fecha);
+  FechaAnterior = new Date(FechaAnterior.setDate(Fecha.getDate()-1)).toDateTimeFormat();
+  
+  Fecha = new Date(Fecha).toDateTimeFormat();
   
   const Insumos = {
     GASOLINA: {id:'COMB-004',cantidad:CantidadGas},
-    Diesel:{id:'COMB-006',cantidad:CantidadDiesel}
+    DIESEL:{id:'COMB-006',cantidad:CantidadDiesel}
   }
   
   ContadorInicial = +ContadorInicial;
@@ -64,7 +73,7 @@ try {
   const Turno = "''";
   const MotivoEspera = "''";
   const Trabajo = "''";
-  const Notas = "''";
+  //const Notas = "''";
   const Horario = "''";
   const IdContratoArrendamiento = 0;
   const CostoUnitario = 0;
@@ -88,7 +97,7 @@ try {
   const ImporteExtra = 0;
   const ImporteCucharon = 0;
   const ImporteMartillo = 0;
-  const TipoDeCosto = 'DIR';
+  const TipoDeCosto = 'DIR';//Check wtf here
   const IdUnidad = 0;
 
   //
@@ -100,13 +109,13 @@ try {
   const IdProveedor = '  '; //char
   // const Fecha = '  ';//datetime
   const IdEmpleadoRecibio = 0; //number-usuario logeado
-  const IdAlmacenDestino = 22; //number
+  const IdAlmacenDestino = 0; //number FIX HERE
   // const IdUsuarioCreo = '  ';//number-usuario logeado
-  const IdObraOrigen = '  '; //char
+  const IdObraOrigen = '  '; //char FIX HERE RENTAS 2020
   const IdSucursal = 1; //number
   // const Notas = '  ';//text
   const TipoMovAlmacen = 'S'; //char
-  const IdAlmacenOrigen = 0; //number
+  const IdAlmacenOrigen = 22; //number
   const IdEmpleadoEntrego = 0; //number
   const IdFacturaDeProveedor = '  '; //char
   // const Created = '  ';//datetime
@@ -171,9 +180,9 @@ try {
   const PrecioSegunOC = 0; //float
   // const Created = '   ';//datetime
   // const IdUsuarioCreo = '   ';//number
-  const ContadorEquipo = 0; //float
+  //const ContadorEquipo = 0; //float
   // const ContadorMotor = 0;//float
-  const FolioInternoSuministro = '   '; //char
+ // const FolioInternoSuministro = '   '; //char
   // const IdEmpleadoOperador = '   ';//number
   // const IdEquipo = '   ';//char
   const IdObraUbicacion = '   '; //char - RENTAS2020
@@ -206,7 +215,7 @@ try {
         IdUsoEquipo = data[0][0].IdUsoEquipo + 1;
         console.log('IdUsoEquipo: ', IdUsoEquipo);
 
-        const queryUsosEquipos = `INSERT INTO UsosEquipo (IdUsoEquipo, IdEquipo, IdEmpleadoOperador, Fecha ,Turno ,ContadorInicial ,ContadorFinal ,HrsEspera ,MotivoEspera ,Trabajo ,Notas ,Horario ,IdContratoArrendamiento ,CostoUnitario ,HrsInactivo ,MotivoInactivo ,HrsMantenimiento ,MotivoMantenimiento ,HrsEfectivo ,VolumenTrabajo ,TipoCosto ,Created ,IdObra ,ContadorMotor ,Costo ,IdUsuarioCreo ,HorasNormales ,HorasExtras ,HorasCucharon ,HorasMartillo ,SueldoxHoraNormal ,SueldoxHoraExtra ,SueldoxHoraCucharon ,SueldoxHoraMartillo ,ImporteNormal ,ImporteExtra ,ImporteCucharon ,ImporteMartillo ,TipoDeCosto ,IdUnidad ) VALUES (${IdUsoEquipo},'${IdEquipo}',${IdEmpleadoOperador},'${Fecha}',${Turno},${ContadorInicial},${ContadorFinal},${HrsEspera},${MotivoEspera},${Trabajo},${Notas},${Horario},${IdContratoArrendamiento},${CostoUnitario},${HrsInactivo},${MotivoInactivo},${HrsMantenimiento},${MotivoMantenimiento},${HrsEfectivo},${VolumenTrabajo},${TipoCosto},'${Created}','${IdObra}',${ContadorMotor},${Costo},${IdUsuarioCreo},${HorasNormales},${HorasExtras},${HorasCucharon},${HorasMartillo},${SueldoxHoraNormal},${SueldoxHoraExtra},${SueldoxHoraCucharon},${SueldoxHoraMartillo},${ImporteNormal},${ImporteExtra},${ImporteCucharon},${ImporteMartillo},'${TipoDeCosto}',${IdUnidad})`;
+        const queryUsosEquipos = `INSERT INTO UsosEquipo (IdUsoEquipo, IdEquipo, IdEmpleadoOperador, Fecha ,Turno ,ContadorInicial ,ContadorFinal ,HrsEspera ,MotivoEspera ,Trabajo ,Notas ,Horario ,IdContratoArrendamiento ,CostoUnitario ,HrsInactivo ,MotivoInactivo ,HrsMantenimiento ,MotivoMantenimiento ,HrsEfectivo ,VolumenTrabajo ,TipoCosto ,Created ,IdObra ,ContadorMotor ,Costo ,IdUsuarioCreo ,HorasNormales ,HorasExtras ,HorasCucharon ,HorasMartillo ,SueldoxHoraNormal ,SueldoxHoraExtra ,SueldoxHoraCucharon ,SueldoxHoraMartillo ,ImporteNormal ,ImporteExtra ,ImporteCucharon ,ImporteMartillo ,TipoDeCosto ,IdUnidad ) VALUES (${IdUsoEquipo},'${IdEquipo}',${IdEmpleadoOperador},'${FechaAnterior}',${Turno},${ContadorInicial},${ContadorFinal},${HrsEspera},${MotivoEspera},${Trabajo},${Notas},${Horario},${IdContratoArrendamiento},${CostoUnitario},${HrsInactivo},${MotivoInactivo},${HrsMantenimiento},${MotivoMantenimiento},${HrsEfectivo},${VolumenTrabajo},${TipoCosto},'${Created}','${IdObra}',${ContadorMotor},${Costo},${IdUsuarioCreo},${HorasNormales},${HorasExtras},${HorasCucharon},${HorasMartillo},${SueldoxHoraNormal},${SueldoxHoraExtra},${SueldoxHoraCucharon},${SueldoxHoraMartillo},${ImporteNormal},${ImporteExtra},${ImporteCucharon},${ImporteMartillo},'${TipoDeCosto}',${IdUnidad})`;
 
         //registro usosEquipo
         db.query(queryUsosEquipos)
@@ -236,7 +245,7 @@ try {
                       .then((data) => {
                         ID = data[0][0].ID + 1;
 
-                        const queryAlmacenD = `INSERT INTO MovsAlmacenD (IdMovAlmacen, IdInsumo, Cantidad, IdObraOrigen, IdSucursal, IdUnidad, Notas, CantidadUtilizada, Precio, IdObraDestino, Importe, IdAreaCosteo, TipoCosto, PrecioSegunOC, Created, IdUsuarioCreo, ContadorEquipo, ContadorMotor, FolioInternoSuministro, IdEmpleadoOperador, IdEquipo, IdObraUbicacion, IdOrdenTrabajo, IdAreaCosteoDestino, Costo, CostoD, CostoP, PrecioDeVenta, ImporteD, IdEspecieSegunMarea, CantidadDeEmpaques, KgsProduccionBruta, PesoDeEmpaques, IdDescargaDeBarcos, IdAlmacen, PeriodoDeCargo, TipoCostoDestino, PeriodoDeCargoDestino) VALUES ('${IdMovAlmacen}', '${IdInsumo}', ${Cantidad}, '${IdObraOrigen}', ${IdSucursal}, ${IdUnidad}, ${Notas}, ${CantidadUtilizada}, ${Precio}, '${IdObraDestino}', ${Importe}, ${IdAreaCosteo}, ${TipoCosto}, ${PrecioSegunOC}, '${Created}', ${IdUsuarioCreo}, ${ContadorEquipo}, ${ContadorMotor}, '${FolioInternoSuministro}', ${IdEmpleadoOperador}, '${IdEquipo}', '${IdObraUbicacion}', '${IdOrdenTrabajo}', ${IdAreaCosteoDestino}, ${Costo}, ${CostoD}, ${CostoP}, ${PrecioDeVenta}, ${ImporteD}, ${IdEspecieSegunMarea}, ${CantidadDeEmpaques}, ${KgsProduccionBruta}, ${PesoDeEmpaques}, ${IdDescargaDeBarcos}, ${IdAlmacen}, '${PeriodoDeCargo}', '${TipoCostoDestino}', '${PeriodoDeCargoDestino}')`;
+                        const queryAlmacenD = `INSERT INTO MovsAlmacenD (IdMovAlmacen, IdInsumo, Cantidad, IdObraOrigen, IdSucursal, IdUnidad, Notas, CantidadUtilizada, Precio, IdObraDestino, Importe, IdAreaCosteo, TipoCosto, PrecioSegunOC, Created, IdUsuarioCreo, ContadorEquipo, ContadorMotor, FolioInternoSuministro, IdEmpleadoOperador, IdEquipo, IdObraUbicacion, IdOrdenTrabajo, IdAreaCosteoDestino, Costo, CostoD, CostoP, PrecioDeVenta, ImporteD, IdEspecieSegunMarea, CantidadDeEmpaques, KgsProduccionBruta, PesoDeEmpaques, IdDescargaDeBarcos, IdAlmacen, PeriodoDeCargo, TipoCostoDestino, PeriodoDeCargoDestino) VALUES ('${IdMovAlmacen}', '${IdInsumo}', ${Cantidad}, '${IdObraOrigen}', ${IdSucursal}, ${IdUnidad}, ${Notas}, ${CantidadUtilizada}, ${Precio}, '${IdObraDestino}', ${Importe}, ${IdAreaCosteo}, ${TipoDeCosto}, ${PrecioSegunOC}, '${Created}', ${IdUsuarioCreo}, ${ContadorEquipo}, ${ContadorMotor}, '${FolioInternoSuministro}', ${IdEmpleadoOperador}, '${IdEquipo}', '${IdObraUbicacion}', '${IdOrdenTrabajo}', ${IdAreaCosteoDestino}, ${Costo}, ${CostoD}, ${CostoP}, ${PrecioDeVenta}, ${ImporteD}, ${IdEspecieSegunMarea}, ${CantidadDeEmpaques}, ${KgsProduccionBruta}, ${PesoDeEmpaques}, ${IdDescargaDeBarcos}, ${IdAlmacen}, '${PeriodoDeCargo}', '${TipoCostoDestino}', '${PeriodoDeCargoDestino}')`;
 
                         //Registro en tabla MovsAlmacenD
                         db.query(queryAlmacenD)
